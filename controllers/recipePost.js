@@ -3,7 +3,13 @@ const Chocolatier = require("../models/chocolatier");
 const Pastry = require("../models/pastry");
 
 const recipePost = async (req, res) => {
-  const { title, ingredients, preparation, menu, file } = req.body;
+  const { title, menu,...body } = req.body;
+
+  const data = {
+    title: title.toLowerCase(),
+    ...body,
+    menu,
+  }
 
   switch (menu) {
     case "Panaderia":
@@ -15,13 +21,7 @@ const recipePost = async (req, res) => {
         });
       }
 
-      const newBakery = new Bakery({
-        title,
-        ingredients,
-        preparation,
-        menu,
-        file
-      });
+      const newBakery = new Bakery(data);
 
       await newBakery.save();
 
@@ -38,13 +38,7 @@ const recipePost = async (req, res) => {
         return res.status(400).json({ msg: `Ya existe la receta ${title}` });
       }
 
-      const newPastry = new Pastry({
-        title,
-        ingredients,
-        preparation,
-        menu,
-        file
-      });
+      const newPastry = new Pastry(data);
 
       await newPastry.save();
 
@@ -60,13 +54,7 @@ const recipePost = async (req, res) => {
         return res.status(400).json({ msg: `Ya existe la receta ${title}` });
       }
 
-      const newChocolatier = new Chocolatier({
-        title,
-        ingredients,
-        preparation,
-        menu,
-        file
-      });
+      const newChocolatier = new Chocolatier(data);
 
       await newChocolatier.save();
 

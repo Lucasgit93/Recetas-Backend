@@ -26,6 +26,8 @@ const userGet = async(req, res = response) => {
     }
 
     const token = await jwtGenerator(userDB.id);
+    
+
 
     return res.json({
       ok: true,

@@ -6,6 +6,7 @@ const { User } = require('../models');
 
 const jwtValidation = async(req = request, res = response, next) => {
     const token = req.header('token')
+
     if (!token) {
         return res.status(401).json({
             msg: 'No hay token en la peticion'
@@ -13,23 +14,25 @@ const jwtValidation = async(req = request, res = response, next) => {
     }
 
     try {
-        const { uid } = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
+        const { uid } = jwt.verify( token, process.env.SECRETORPRIVATEKEY);
 
         const user = await User.findById( uid );
+        
+        
         if (!user) {
             return res.status(401).json({
                 msg: 'Token no valido'
             })
         }
-
+        
         req.user = user;
 
         next();
     } catch (error) {
-
-        console.log(error);
         res.status(401).json({
-            msg: 'Token no valido'
+            msg: 'Token no valido 2',
+           error
+
         })
 
     }

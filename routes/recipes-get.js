@@ -1,14 +1,11 @@
-
 const { Router } = require("express");
 const {
-    recipeGet
+  recipesGet
 } = require("../controllers");
-
 
 const router = Router();
 
-
-router.get("/:id", recipeGet);
+router.get("/:menu", recipesGet);
 
 
 module.exports = router;

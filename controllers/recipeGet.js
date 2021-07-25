@@ -33,57 +33,26 @@ const recipesGet = async (req = request, res) => {
   }
 };
 
-const bakeryGet = async (req, res) => {
+const recipeGet = async(req, res) => {
   const { id } = req.params;
 
-  const recipe = await Bakery.findById(id);
+  const bakery = await Bakery.findById(id);
 
-  if (!recipe) {
-    res.status(400).json({
-      msg: "No existe la receta con ese id",
-    });
-  }
+  const pastry = await Pastry.findById(id);
 
-  res.status(200).json({
-    recipe,
-  });
-};
+  const chocolatier = await Chocolatier.findById(id);
 
-const pastryGet = async (req, res) => {
-  const { id } = req.params;
-
-  const recipe = await Pastry.findById(id);
-
-  if (!recipe) {
-    res.status(400).json({
-      msg: "No existe la receta con ese id",
-    });
-  }
 
   res.status(200).json({
-    recipe,
-  });
-};
+    bakery,
+    pastry,
+    chocolatier
+  })
 
-const chocolatierGet = async (req, res) => {
-  const { id } = req.params;
 
-  const recipe = await Chocolatier.findById(id);
-
-  if (!recipe) {
-    res.status(400).json({
-      msg: "No existe la receta con ese id",
-    });
-  }
-
-  res.status(200).json({
-    recipe,
-  });
 };
 
 module.exports = {
   recipesGet,
-  bakeryGet,
-  pastryGet,
-  chocolatierGet,
+  recipeGet,
 };

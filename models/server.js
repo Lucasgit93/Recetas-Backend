@@ -14,10 +14,12 @@ class Server {
         this.paths= {
             userLogin    : '/login',
             recipePost   : '/new',
+            recipesGet   : '/recipes',
             recipeGet    : '/recipe',
             recipePut    : '/recipe',
             recipeDelete : '/recipe',
             recipeUpload : '/uploads',
+            recipeSearch : '/search',
 
         }
 
@@ -45,11 +47,13 @@ class Server {
 
     routes() {
         this.app.use(this.paths.recipePost, require('../routes/recipe-post'));
+        this.app.use(this.paths.recipesGet, require('../routes/recipes-get'));
         this.app.use(this.paths.recipeGet, require('../routes/recipe-get'));
         this.app.use(this.paths.recipePut, require('../routes/recipe-put'));
         this.app.use(this.paths.recipeDelete, require('../routes/recipe-delete'));
         this.app.use(this.paths.recipeUpload, require('../routes/uploads'));
         this.app.use(this.paths.userLogin, require('../routes/user-login'));
+        this.app.use(this.paths.recipeSearch, require('../routes/recipe-search-get'));
 
 
 
