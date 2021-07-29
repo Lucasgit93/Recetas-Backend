@@ -12,7 +12,6 @@ const { jwtValidation } = require('../middlewares/jwtValidation');
 const router = Router();
 
 
-
 router.post('/', [
     jwtValidation,
     check('title', 'Campo obligatorio').not().isEmpty(),

@@ -4,25 +4,24 @@ const { Bakery, Chocolatier, Pastry } = require("../models");
 const recipesGet = async (req = request, res) => {
   const { menu } = req.params;
   const { q } = req.body;
-  const { limite = 10 } = req.query;
 
   switch (menu) {
     case "bakery":
-      const bakery = await Bakery.find({ q }).limit(Number(limite));
+      const bakery = await Bakery.find({ q })
 
       return res.status(200).json({
         bakery,
       });
 
     case "pastry":
-      const pastry = await Pastry.find({ q }).limit(Number(limite));
+      const pastry = await Pastry.find({ q })
 
       return res.status(200).json({
         pastry,
       });
 
     case "chocolatier":
-      const chocolatier = await Chocolatier.find({ q }).limit(Number(limite));
+      const chocolatier = await Chocolatier.find({ q })
 
       return res.status(200).json({
         chocolatier,
