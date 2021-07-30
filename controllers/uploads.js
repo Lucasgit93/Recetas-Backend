@@ -9,7 +9,6 @@ cloudinary.config({
 
 const { response } = require("express");
 const { fileUpload } = require("../helpers/file-upload");
-const { Chocolatier, Pastry, Bakery } = require("../models");
 
 const fileLoad = async (req, res = response) => {
   try {
@@ -24,7 +23,7 @@ const fileLoad = async (req, res = response) => {
 };
 
 const cloudinaryImgUpdate = async (req, res = response) => {
-  const { id } = req.params;
+  const { id, especialidad } = req.params;
 
   let model;
 
@@ -34,7 +33,7 @@ const cloudinaryImgUpdate = async (req, res = response) => {
 
       if (!model) {
         return res.status(400).json({
-          msg: `No existe el usuario con el id - ${id}`,
+          msg: `No existe una recetacon el id - ${id}`,
         });
       }
 
@@ -44,7 +43,7 @@ const cloudinaryImgUpdate = async (req, res = response) => {
 
       if (!model) {
         return res.status(400).json({
-          msg: `No existe un producto con el id - ${id}`,
+          msg: `No existe una receta con el id - ${id}`,
         });
       }
 
@@ -55,7 +54,7 @@ const cloudinaryImgUpdate = async (req, res = response) => {
 
       if (!model) {
         return res.status(400).json({
-          msg: `No existe un producto con el id - ${id}`,
+          msg: `No existe una receta con el id - ${id}`,
         });
       }
 
@@ -95,7 +94,7 @@ const showImg = async (req, res = response) => {
 
       if (!model) {
         return res.status(400).json({
-          msg: `No existe el usuario con el id - ${id}`,
+          msg: `No existe una recetacon el id - ${id}`,
         });
       }
 
@@ -105,7 +104,7 @@ const showImg = async (req, res = response) => {
 
       if (!model) {
         return res.status(400).json({
-          msg: `No existe un producto con el id - ${id}`,
+          msg: `No existe una receta con el id - ${id}`,
         });
       }
 
@@ -116,7 +115,7 @@ const showImg = async (req, res = response) => {
 
       if (!model) {
         return res.status(400).json({
-          msg: `No existe un producto con el id - ${id}`,
+          msg: `No existe una receta con el id - ${id}`,
         });
       }
 
