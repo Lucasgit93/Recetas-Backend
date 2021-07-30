@@ -18,7 +18,7 @@ class Server {
             recipeGet    : '/recipe',
             recipePut    : '/recipe',
             recipeDelete : '/recipe',
-            recipeUpload : '/uploads',
+            recipeUpload : '/upload',
             recipeSearch : '/search',
 
         }

@@ -9,6 +9,7 @@ cloudinary.config({
 
 const { response } = require("express");
 const { fileUpload } = require("../helpers/file-upload");
+const { Chocolatier, Pastry, Bakery } = require("../models");
 
 const fileLoad = async (req, res = response) => {
   try {
@@ -23,13 +24,13 @@ const fileLoad = async (req, res = response) => {
 };
 
 const cloudinaryImgUpdate = async (req, res = response) => {
-  const { id, especialidad } = req.params;
+  const { id } = req.params;
 
   let model;
 
   switch (especialidad) {
     case "bakery":
-      model = await Usuario.findById(id);
+      model = await Bakery.findById(id);
 
       if (!model) {
         return res.status(400).json({
@@ -39,7 +40,7 @@ const cloudinaryImgUpdate = async (req, res = response) => {
 
       break;
     case "pastry":
-      model = await Producto.findById(id);
+      model = await Pastry.findById(id);
 
       if (!model) {
         return res.status(400).json({
@@ -50,7 +51,7 @@ const cloudinaryImgUpdate = async (req, res = response) => {
       break;
 
     case "chocolatier":
-      model = await Producto.findById(id);
+      model = await Chocolatier.findById(id);
 
       if (!model) {
         return res.status(400).json({
@@ -90,7 +91,7 @@ const showImg = async (req, res = response) => {
 
   switch (especialidad) {
     case "bakery":
-      model = await Usuario.findById(id);
+      model = await Bakery.findById(id);
 
       if (!model) {
         return res.status(400).json({
@@ -100,7 +101,7 @@ const showImg = async (req, res = response) => {
 
       break;
     case "pastry":
-      model = await Producto.findById(id);
+      model = await Pastry.findById(id);
 
       if (!model) {
         return res.status(400).json({
@@ -111,7 +112,7 @@ const showImg = async (req, res = response) => {
       break;
 
     case "chocolatier":
-      model = await Producto.findById(id);
+      model = await Chocolatier.findById(id);
 
       if (!model) {
         return res.status(400).json({
