@@ -9,6 +9,7 @@ cloudinary.config({
 
 const { response } = require("express");
 const { fileUpload } = require("../helpers/file-upload");
+const { Bakery, Pastry, Chocolatier } = require("../models");
 
 const fileLoad = async (req, res = response) => {
   try {
@@ -21,6 +22,27 @@ const fileLoad = async (req, res = response) => {
     res.status(400).json({ msg });
   }
 };
+
+const cloudinaryUpload = async (req, res) => {
+  const { tempFilePath } = req.files.file;
+
+
+  const { secure_url } = await cloudinary.uploader.upload(tempFilePath);
+
+
+  res.json(secure_url);
+
+
+
+
+};
+
+
+
+
+
+
+
 
 const cloudinaryImgUpdate = async (req, res = response) => {
   const { id, especialidad } = req.params;
@@ -73,7 +95,8 @@ const cloudinaryImgUpdate = async (req, res = response) => {
     cloudinary.uploader.destroy(public_id);
   }
 
-  const { tempFilePath } = req.files.archivo;
+  const { tempFilePath } = req.files.file;
+
   const { secure_url } = await cloudinary.uploader.upload(tempFilePath);
 
   model.img = secure_url;
@@ -127,7 +150,12 @@ const showImg = async (req, res = response) => {
   }
 
   if (model.img) {
-    const pathImagen = path.join(__dirname, "../uploads", especialidad, model.img);
+    const pathImagen = path.join(
+      __dirname,
+      "../uploads",
+      especialidad,
+      model.img
+    );
     if (fs.existsSync(pathImagen)) {
       return res.sendFile(pathImagen);
     }
@@ -141,6 +169,7 @@ const showImg = async (req, res = response) => {
 };
 
 module.exports = {
+  cloudinaryUpload,
   fileLoad,
   showImg,
   cloudinaryImgUpdate,
