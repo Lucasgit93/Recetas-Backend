@@ -22,7 +22,6 @@ class Server {
             recipeDelete : '/recipe',
             recipeUpload : '/upload',
             recipeSearch : '/search',
-
         }
 
         this.database();

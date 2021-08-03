@@ -26,69 +26,31 @@ const fileLoad = async (req, res = response) => {
 const cloudinaryUpload = async (req, res) => {
   const { tempFilePath } = req.files.file;
 
-
   const { secure_url } = await cloudinary.uploader.upload(tempFilePath);
 
-
   res.json(secure_url);
-
-
-
-
 };
 
-
-
-
-
-
-
-
 const cloudinaryImgUpdate = async (req, res = response) => {
-  const { id, especialidad } = req.params;
+  const id  = req.params.id;
 
   let model;
+  const bakery = await Bakery.findById(id);
+  const pastry = await Pastry.findById(id);
+  const chocolatier = await Chocolatier.findById(id);
 
-  switch (especialidad) {
-    case "bakery":
-      model = await Bakery.findById(id);
-
-      if (!model) {
-        return res.status(400).json({
-          msg: `No existe una recetacon el id - ${id}`,
-        });
-      }
-
-      break;
-    case "pastry":
-      model = await Pastry.findById(id);
-
-      if (!model) {
-        return res.status(400).json({
-          msg: `No existe una receta con el id - ${id}`,
-        });
-      }
-
-      break;
-
-    case "chocolatier":
-      model = await Chocolatier.findById(id);
-
-      if (!model) {
-        return res.status(400).json({
-          msg: `No existe una receta con el id - ${id}`,
-        });
-      }
-
-      break;
-
-    default:
-      return res.status(500).json({ msg: "Se me olvido validar esto" });
-      break;
+  if( bakery !== null ){
+    model = bakery
+  } else if( pastry !== null ){
+    model = pastry;
+  } else {
+    model = chocolatier
   }
 
-  if (model.img) {
-    const nameArr = model.img.split("/");
+
+  
+  if (model.file) {
+    const nameArr = model.file.split("/");
     const name = nameArr[nameArr.length - 1];
     const [public_id] = name.split(".");
 
@@ -99,12 +61,38 @@ const cloudinaryImgUpdate = async (req, res = response) => {
 
   const { secure_url } = await cloudinary.uploader.upload(tempFilePath);
 
-  model.img = secure_url;
+  model.file = secure_url;
 
   await model.save();
 
-  res.json(model);
+  res.json(model.file);
 };
+
+
+const cloudinaryImgDelete = async (req, res = response) => {
+  const id = req.params.id;
+
+  let model;
+
+  const bakery = await Bakery.findById( id );
+  const pastry = await Pastry.findById( id );
+  const chocolatier = await Chocolatier.findById( id );
+
+  if( bakery !== null ){
+    model = bakery
+  } else if( pastry !== null ){
+    model = pastry;
+  } else {
+    model = chocolatier
+  }
+    const nameArr = model.file.split("/");
+    const name = nameArr[nameArr.length - 1];
+    const [public_id] = name.split(".");
+
+    cloudinary.uploader.destroy(public_id)
+   res.status(200).json('Borrado');
+
+}
 
 const showImg = async (req, res = response) => {
   const { id, especialidad } = req.params;
@@ -170,7 +158,6 @@ const showImg = async (req, res = response) => {
 
 module.exports = {
   cloudinaryUpload,
-  fileLoad,
-  showImg,
   cloudinaryImgUpdate,
+  cloudinaryImgDelete
 };
