@@ -35,6 +35,8 @@ const recipesGet = async (req = request, res) => {
 const recipeGet = async(req, res) => {
   const { id } = req.params;
 
+  let recipe;
+
   const bakery = await Bakery.findById(id);
 
   const pastry = await Pastry.findById(id);
